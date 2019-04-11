@@ -1081,22 +1081,6 @@ sync-mode="FAST"
 
 Specifies the synchronization mode. Default is `FULL`.
 
-### fast-sync-max-wait-time
-
-```bash tab="Syntax"
---fast-sync-max-wait-time=<INTEGER>
-```
-
-```bash tab="Example Command Line"
---fast-sync-max-wait-time=30
-```
-
-```bash tab="Example Configuration File"
-fast-sync-max-wait-time=30
-```
-
-Maximum time in seconds to wait for the required number of peers before starting fast sync. Default is 0.  
-
 ### fast-sync-min-peers
 
 ```bash tab="Syntax"
