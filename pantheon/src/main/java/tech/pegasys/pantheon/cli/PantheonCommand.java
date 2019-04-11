@@ -45,6 +45,7 @@ import tech.pegasys.pantheon.ethereum.core.MiningParameters;
 import tech.pegasys.pantheon.ethereum.core.PendingTransactions;
 import tech.pegasys.pantheon.ethereum.core.PrivacyParameters;
 import tech.pegasys.pantheon.ethereum.core.Wei;
+import tech.pegasys.pantheon.ethereum.eth.EthereumWireProtocolConfiguration;
 import tech.pegasys.pantheon.ethereum.eth.sync.SyncMode;
 import tech.pegasys.pantheon.ethereum.eth.sync.SynchronizerConfiguration;
 import tech.pegasys.pantheon.ethereum.eth.sync.TrailingPeerRequirements;
@@ -68,6 +69,7 @@ import tech.pegasys.pantheon.util.InvalidConfigurationException;
 import tech.pegasys.pantheon.util.PermissioningConfigurationValidator;
 import tech.pegasys.pantheon.util.bytes.BytesValue;
 import tech.pegasys.pantheon.util.enode.EnodeURL;
+import tech.pegasys.pantheon.util.number.PositiveNumber;
 import tech.pegasys.pantheon.util.uint.UInt256;
 
 import java.io.File;
@@ -104,7 +106,6 @@ import picocli.CommandLine;
 import picocli.CommandLine.AbstractParseResultHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
-import picocli.CommandLine.ITypeConverter;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 
@@ -123,11 +124,7 @@ import picocli.CommandLine.ParameterException;
     footer = "Pantheon is licensed under the Apache License 2.0")
 public class PantheonCommand implements DefaultCommandValues, Runnable {
 
-  private final Logger logger;
-
-  private CommandLine commandLine;
-
-  public static class RpcApisConverter implements ITypeConverter<RpcApi> {
+  static class RpcApisConverter implements CommandLine.ITypeConverter<RpcApi> {
 
     @Override
     public RpcApi convert(final String name) throws RpcApisConversionException {
@@ -143,17 +140,22 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
     }
   }
 
-  public static class RpcApisConversionException extends Exception {
+  static class RpcApisConversionException extends Exception {
 
-    RpcApisConversionException(final String s) {
+    public RpcApisConversionException(final String s) {
       super(s);
     }
   }
+
+  private final Logger logger;
+
+  private CommandLine commandLine;
 
   private final BlockImporter blockImporter;
 
   private final PantheonControllerBuilder controllerBuilder;
   private final SynchronizerConfiguration.Builder synchronizerConfigurationBuilder;
+  private final EthereumWireProtocolConfiguration.Builder ethereumWireConfigurationBuilder;
   private final RocksDbConfiguration.Builder rocksDbConfigurationBuilder;
   private final RunnerBuilder runnerBuilder;
 
@@ -556,12 +558,14 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
       final RunnerBuilder runnerBuilder,
       final PantheonControllerBuilder controllerBuilder,
       final SynchronizerConfiguration.Builder synchronizerConfigurationBuilder,
+      final EthereumWireProtocolConfiguration.Builder ethereumWireConfigurationBuilder,
       final RocksDbConfiguration.Builder rocksDbConfigurationBuilder) {
     this.logger = logger;
     this.blockImporter = blockImporter;
     this.runnerBuilder = runnerBuilder;
     this.controllerBuilder = controllerBuilder;
     this.synchronizerConfigurationBuilder = synchronizerConfigurationBuilder;
+    this.ethereumWireConfigurationBuilder = ethereumWireConfigurationBuilder;
     this.rocksDbConfigurationBuilder = rocksDbConfigurationBuilder;
   }
 
@@ -599,6 +603,7 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
     commandLine.registerConverter(SyncMode.class, SyncMode::fromString);
     commandLine.registerConverter(UInt256.class, (arg) -> UInt256.of(new BigInteger(arg)));
     commandLine.registerConverter(Wei.class, (arg) -> Wei.of(Long.parseUnsignedLong(arg)));
+    commandLine.registerConverter(PositiveNumber.class, PositiveNumber::fromString);
 
     // Add performance options
     UnstableOptionsSubCommand.createUnstableOptions(
@@ -607,7 +612,9 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
             "Synchronizer",
             synchronizerConfigurationBuilder,
             "RocksDB",
-            rocksDbConfigurationBuilder));
+            rocksDbConfigurationBuilder,
+            "Ethereum Wire Protocol",
+            ethereumWireConfigurationBuilder));
 
     // Create a handler that will search for a config file option and use it for default values
     // and eventually it will run regular parsing of the remaining options.
@@ -655,8 +662,8 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
         logger,
         commandLine,
         "--sync-mode",
-        SyncMode.FAST.equals(syncMode),
-        asList("--fast-sync-num-peers", "--fast-sync-timeout"));
+        !SyncMode.FAST.equals(syncMode),
+        asList("--fast-sync-min-peers", "--fast-sync-max-wait-time"));
 
     //noinspection ConstantConditions
     if (isMiningEnabled && coinbase == null) {
@@ -726,6 +733,7 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
     try {
       return controllerBuilder
           .synchronizerConfiguration(buildSyncConfig())
+          .ethereumWireProtocolConfiguration(ethereumWireConfigurationBuilder.build())
           .rocksDbConfiguration(buildRocksDbConfiguration())
           .homePath(dataDir())
           .ethNetworkConfig(updateNetworkConfig(getNetwork()))
@@ -938,20 +946,21 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
         !isPrivacyEnabled,
         asList("--privacy-url", "--privacy-public-key-file", "--privacy-precompiled-address"));
 
-    final PrivacyParameters privacyParameters = PrivacyParameters.noPrivacy();
+    final PrivacyParameters.Builder privacyParametersBuilder = new PrivacyParameters.Builder();
     if (isPrivacyEnabled) {
-      privacyParameters.setEnabled(true);
-      privacyParameters.setUrl(privacyUrl.toString());
+      privacyParametersBuilder.setEnabled(true);
+      privacyParametersBuilder.setEnclaveUrl(privacyUrl);
       if (privacyPublicKeyFile() != null) {
-        privacyParameters.setEnclavePublicKeyUsingFile(privacyPublicKeyFile());
+        privacyParametersBuilder.setEnclavePublicKeyUsingFile(privacyPublicKeyFile());
       } else {
         throw new ParameterException(
             commandLine, "Please specify Enclave public key file path to enable privacy");
       }
-      privacyParameters.setPrivacyAddress(privacyPrecompiledAddress);
-      privacyParameters.enablePrivateDB(dataDir());
+      privacyParametersBuilder.setPrivacyAddress(privacyPrecompiledAddress);
+      privacyParametersBuilder.setMetricsSystem(metricsSystem.get());
+      privacyParametersBuilder.setDataDir(dataDir());
     }
-    return privacyParameters;
+    return privacyParametersBuilder.build();
   }
 
   private SynchronizerConfiguration buildSyncConfig() {
