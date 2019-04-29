@@ -167,7 +167,7 @@ For participating nodes that are not going to add or remove nodes from the white
      set to the address of the Ingress contract in the genesis file (`"0x0000000000000000000000000000000000009999"`)
 
     * [--bootnodes](../Reference/Pantheon-CLI-Syntax.md#bootnodes) set to the first node (that is, the node that [deployed
-     the Admin and Rules contracts](#deploy-admin-and-rules-contracts).      
+     the Admin and Rules contracts](#deploy-admin-and-rules-contracts).
 
 1. Copy the [enode URL](../Configuring-Pantheon/Node-Keys.md#enode-url) and [have node added to the whitelist](#add-and-remove-nodes-from-the-whitelist).
 
