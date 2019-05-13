@@ -645,7 +645,10 @@ None
 Returns a list of account addresses that the client owns.
 
 !!!note
-    This method returns an empty object because Pantheon [does not support account management](../JSON-RPC-API/Using-JSON-RPC-API.md#account-management).
+    This method returns an empty object because Pantheon [doesn't support key management](../JSON-RPC-API/Using-JSON-RPC-API.md#account-management)
+    inside the client.
+    
+    Use [EthSigner](http://docs.ethsigner.pegasys.tech/en/latest/) with Pantheon to provide access to your key store and sign transactions.
 
 **Parameters**
 
@@ -955,7 +958,9 @@ You can interact with contracts using [eth_sendRawTransaction or eth_call](../Us
 To avoid exposing your private key, create signed transactions offline and send the signed transaction data using `eth_sendRawTransaction`. 
 
 !!!important
-    Pantheon does not implement [eth_sendTransaction](../JSON-RPC-API/Using-JSON-RPC-API.md#account-management).
+    Pantheon does not implement [eth_sendTransaction](../JSON-RPC-API/Using-JSON-RPC-API.md#account-management). 
+    
+    [EthSigner](https://docs.ethsigner.pegasys.tech/en/latest/) provides transaction signing and implements [`eth_sendTransaction`](https://docs.ethsigner.pegasys.tech/en/latest/Using-EthSigner#eth_sendTransaction). 
 
 **Parameters**
 
