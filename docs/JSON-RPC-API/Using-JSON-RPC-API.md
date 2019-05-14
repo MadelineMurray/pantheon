@@ -133,13 +133,14 @@ The block parameter can have the following values:
 
 ## Not Supported by Pantheon
 
-### Account Management 
+### Key Management 
 
-Account management relies on private key management in the client which is not implemented by Pantheon. 
+Key management inside the client is not implemented by Pantheon. 
 
-Use [`eth_sendRawTransaction`](../Reference/JSON-RPC-API-Methods.md#eth_sendrawtransaction) to send signed transactions; `eth_sendTransaction` is not implemented. 
+Use [`eth_sendRawTransaction`](../Reference/JSON-RPC-API-Methods.md#eth_sendrawtransaction) to send signed transactions
+or use [EthSigner](http://docs.ethsigner.pegasys.tech/en/latest/) with Pantheon to provide access to your key store and sign transactions. 
 
-Use third-party wallets for [account management](../Using-Pantheon/Account-Management.md). 
+Use third-party wallets for [key management](../Using-Pantheon/Account-Management.md). 
 
 ### Protocols
 
