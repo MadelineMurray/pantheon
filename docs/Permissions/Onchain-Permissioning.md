@@ -181,6 +181,16 @@ For participating nodes that are going to add or remove nodes from the whitelist
 
 1. Have account for node that will interact with permissioning contracts added as an [admin account](#add-and-remove-admin-accounts). 
 
+## Bootnodes
+
+When a node is added to the network, it connects to the bootnodes until it synchronizes to the chain head regardless of
+node permissions. Once in sync, the permissioning rules are applied and connections to bootnodes are dropped if not permitted by node 
+permissions.  
+
+If a sychronized node loses all peer connections (that is, it has 0 peers), it reconnects to the bootnodes regardless of node 
+permissions. When the node has connected to 1 or more non-bootnodes, connections to bootnodes are dropped if not permitted by node 
+permissions.   
+
 ## Add and Remove Admin Accounts      
 
 The account that deploys the Rules contract is automatically an Admin account. Only Admin accounts can
