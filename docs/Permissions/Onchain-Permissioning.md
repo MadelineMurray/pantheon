@@ -21,7 +21,7 @@ The following smart contracts are provided in the [PegaSysEng/permissioning-smar
 * Ingress - a simple contract functioning as a gateway to the Admin and Rules contracts. The Ingress contract is deployed 
 to a static address. 
 
-* Rules - stores the node whitelist and node whitelist operations (for example, add and remove). 
+* Node Rules - stores the node whitelist and node whitelist operations (for example, add and remove). 
 
 * Admin - stores the list of admin accounts and admin list operations (for example, add and remove).
 
@@ -151,7 +151,7 @@ To add or remove nodes:
 To display the nodes whitelist, paste the following into the Truffle Console: 
 
 ```javascript
-Rules.deployed().then(function(instance) {instance.getSize().then(function(txCount) {console.log("size of whitelist: " + txCount); var i=txCount; while(i>=0) {instance.getByIndex(i--).then(function(tx) {console.log(tx)})}});});
+NodeRules.deployed().then(function(instance) {instance.getSize().then(function(txCount) {console.log("size of whitelist: " + txCount); var i=txCount; while(i>=0) {instance.getByIndex(i--).then(function(tx) {console.log(tx)})}});});
 ```
 
 ## Start Other Network Nodes 
