@@ -70,7 +70,7 @@ in the [`permissioning-smart-contracts` repository](https://github.com/PegaSysEn
 
     * `PANTHEON_NODE_PERM_KEY` - private key of the account used to interact with the permissioning contracts.
 
-    * `INGRESS_CONTRACT_ADDRESS` - address of the Ingress contract in the genesis file.  
+    * `NODE_INGRESS_CONTRACT_ADDRESS` - address of the Ingress contract in the genesis file.  
 
     * `PANTHEON_NODE_PERM_ENDPOINT` - required only if your node is not using the default JSON-RPC host and port (`http://127.0.0.1:8545`). 
        Set to JSON-RPC host and port. 
