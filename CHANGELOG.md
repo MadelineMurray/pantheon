@@ -8,6 +8,7 @@ From v1.2, Pantheon will require Java 11.  That is, Pantheon on Java 8 will no l
 
 ### Additions and Improvements
 
+- \[PAN-2811\] Be more lenient with discovery message deserialization. Completes our support for EIP-8 and enables Pantheon to work on Rinkeby again. [\#1580](https://github.com/PegaSysEng/pantheon/pull/1580) 
 - Added liveness and readiness probe stub endpoints [\#1553](https://github.com/PegaSysEng/pantheon/pull/1553) 
 - Implemented operator tool. \(blockchain network configuration for permissioned networks\) [\#1511](https://github.com/PegaSysEng/pantheon/pull/1511) 
 - \[PAN-2754\] Added eea\_getPrivacyPrecompileAddress [\#1579](https://github.com/PegaSysEng/pantheon/pull/1579) (thanks to [Puneetha17](https://github.com/Puneetha17))
@@ -17,6 +18,7 @@ From v1.2, Pantheon will require Java 11.  That is, Pantheon on Java 8 will no l
 
 Documentation updates include: 
 
+- Updated [IBFT 2.0 tutorial](https://docs.pantheon.pegasys.tech/en/latest/Tutorials/Create-IBFT-Network/) to use network configuration tool
 - Added [debug\_traceBlock\* methods](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-API-Methods/#debug_traceblock) 
 - Reorganised [monitoring documentation](https://docs.pantheon.pegasys.tech/en/latest/Monitoring/Monitoring-Performance/)
 - Added [link to sample Grafana dashboard](https://docs.pantheon.pegasys.tech/en/latest/Monitoring/Monitoring-Performance/#monitor-node-performance-using-prometheus) 
@@ -26,7 +28,7 @@ Documentation updates include:
 
 ### Technical Improvements 
 
-- \[PAN-2811\] Be more lenient with discovery message deserialization [\#1580](https://github.com/PegaSysEng/pantheon/pull/1580) 
+- PAN-2816: Hiding experimental account permissioning cli options [\#1584](https://github.com/PegaSysEng/pantheon/pull/1584)
 - \[PAN-2630\] Synchronizer should disconnect the sync target peer on invalid block data [\#1578](https://github.com/PegaSysEng/pantheon/pull/1578) 
 - Rename MetricCategory to PantheonMetricCategory [\#1574](https://github.com/PegaSysEng/pantheon/pull/1574) 
 - Convert MetricsConfigiguration to use a builder [\#1572](https://github.com/PegaSysEng/pantheon/pull/1572) 
