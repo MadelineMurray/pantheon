@@ -76,7 +76,12 @@ Returns the number of transactions sent from the specified address for the priva
 
     !!! example
         ```bash tab="JS request"
-        add
+        return web3.eea
+           .getTransactionCount({
+           privateKey: pantheon.node1.privateKey,
+           privateFrom: orion.node1.publicKey,
+           privateFor: [orion.node2.publicKey],
+           })
         ```
         
 ## getTransactionReceipt 
@@ -87,8 +92,8 @@ Gets the private transaction receipt using `eea_getTransactionReceipt`.
 
 `txHash` - `string` : Transaction hash of the private transaction
 `enclavePublicKey` - `string` : `privateFrom` key for the transaction 
-`retries` - `int` : Number of attempts to make to get the private marker transaction receipts 
-`delay` - `int` : Delay between retries in milliseconds
+`retries` - `int` : Optional. Number of attempts to make to get the private marker transaction receipts. Default is `300`. 
+`delay` - `int` : Optional. Delay between retries in milliseconds. Optional. Default is `1000`.
 
 **Returns**
 
@@ -96,10 +101,9 @@ Private transaction receipt
 
     !!! example
         ```bash
-          const privateTxReceipt = web3.eea.getTransactionReceipt("0x9c41b3d44ed73511c82a9e2b1ef581eb797475c82f318ca2802358d3ba4a8274", "A1aVtMxLCUHmBVHXoZzzBgPbW/wj5axDpW9X8l91SGo=");
+         const privateTxReceipt = web3.eea.getTransactionReceipt("0x9c41b3d44ed73511c82a9e2b1ef581eb797475c82f318ca2802358d3ba4a8274", "A1aVtMxLCUHmBVHXoZzzBgPbW/wj5axDpW9X8l91SGo=");
         ```
     
-        
 ## sendRawTransaction 
 
 Signs and sends a RLP-encoded private transaction to Pantheon using `eea_sendRawTransaction`. 
