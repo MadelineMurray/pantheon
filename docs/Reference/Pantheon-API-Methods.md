@@ -3738,6 +3738,12 @@ None
     The `EEA` API methods are not enabled by default for JSON-RPC. Use the [`--rpc-http-api`](Pantheon-CLI-Syntax.md#rpc-http-api) 
     or [`--rpc-ws-api`](Pantheon-CLI-Syntax.md#rpc-ws-api) options to enable the `EEA` API methods.
 
+### eea_createPrivacyGroup 
+
+
+### eea_deletePrivacyGroup
+
+
 ### eea_sendRawTransaction
 
 Creates a private transaction from a signed transaction, generates the transaction hash and submits it 
@@ -3749,8 +3755,8 @@ To avoid exposing your private key, create signed transactions offline and send 
 data using `eea_sendRawTransaction`.
 
 !!! important
-    For production systems requiring private transactions, we recommend using a network 
-    with a consensus mechanism supporting transaction finality. For example, [IBFT 2.0](../Consensus-Protocols/IBFT.md). 
+    For production systems using private transactions, we recommend using a consensus mechanism with 
+    transaction finality. For example, [IBFT 2.0](../Consensus-Protocols/IBFT.md). 
 
 **Parameters**
 
