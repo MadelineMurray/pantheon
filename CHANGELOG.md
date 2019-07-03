@@ -16,7 +16,7 @@ Documentation updates include:
 - Added [readiness and liveness endpoints](https://docs.pantheon.pegasys.tech/en/latest/Pantheon-API/Using-JSON-RPC-API/#readiness-and-liveness-endpoints) 
 - Added [high availability content](https://docs.pantheon.pegasys.tech/en/latest/Deploying-Pantheon/High-Availability/) 
 - Added [web3js-eea client library](https://docs.pantheon.pegasys.tech/en/latest/Privacy/Private-Transactions/eeajs/) 
-- 
+- Added content on [setting CLI options using environment variables](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-CLI-Syntax/#specifying-options)
 
 ### Technical Improvements 
 
