@@ -11,3 +11,8 @@ To create and send private transactions use one of:
 !!! note
     Private transactions either deploy contracts or call contract functions. 
     Ether transfer transactions cannot be private. 
+    
+## Accessing Private Transactions using JSON-RPC
+
+A private transaction creates a Privacy Marker Transaction (PMT) that is included in a block and 
+propagated using devP2P in the same way as a public Ethereum transaction. 
