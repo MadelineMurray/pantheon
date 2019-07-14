@@ -643,8 +643,11 @@ Possible values are :
     Values are case insensitive, so either `mainnet` or `MAINNET` works.
     
 !!!important
+    To prevent eclipse attacks, we recommend enabling the [remote connections limit](#remote-connections-limit-enabled)
+    when connecting to any public network and especially when using [fast sync](#fast-sync-options).
+    
     The [`--network`](#network) and [`--genesis-file`](#genesis-file) option cannot be used at the same time.
-
+    
 ### network-id
 
 ```bash tab="Syntax"
@@ -999,6 +1002,51 @@ privacy-url="http://127.0.0.1:8888"
 ```
 
 URL on which the [Orion node](../Privacy/Configuring-Privacy.md#4-create-orion-configuration-files) is running.    
+
+### remote-connections-limit-enabled
+
+```bash tab="Syntax"
+--remote-connections-limit-enabled[=<true|false>]
+```
+
+```bash tab="Command Line"
+--remote-connections-limit-enabled
+```
+
+```bash tab="Environment Variable"
+PANTHEON_REMOTE_CONNECTIONS_LIMIT_ENABLED=true
+```
+
+```bash tab="Configuration File"
+remote-connections-limit-enabled=true
+```
+
+Specify to limit the percentage of wire connections initiated by peers. Default is false. 
+
+!!! important
+    To prevent eclipse attacks, we recommend enabling the remote connections limit when connecting to 
+    any public network and especially when using [fast sync](#fast-sync-options). 
+
+### remote-connections-percentage
+
+```bash tab="Syntax"
+--remote-connections-percentage=<DOUBLE>
+```
+
+```bash tab="Command Line"
+--remote-connections-percentage=25
+```
+
+```bash tab="Environment Variable"
+PANTHEON_REMOTE_CONNECTIONS_PERCENTAGE=25
+```
+
+```bash tab="Configuration File"
+remote-connections-percentage=25
+```
+
+Percentage of remote wire connections that can be established with the node. Must be between 0 and 100 inclusive.
+Default is 50. 
 
 ### rpc-http-api
 
@@ -1429,6 +1477,10 @@ sync-mode="FAST"
 ```
 
 Specifies the synchronization mode. Default is `FULL`.
+
+!!!important
+    To prevent eclipse attacks, we recommend enabling the [remote connections limit](#remote-connections-limit-enabled) 
+    when using fast sync.
 
 ### fast-sync-min-peers
 

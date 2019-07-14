@@ -3,6 +3,16 @@ description: Managing Pantheon peers
 
 # Managing Peers 
  
+## Limiting Remote Connections 
+
+Use the [`--remote-connections-limit-enabled`](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
+and [`--remote-connections-percentage`](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-percentage) options 
+to limit the number of remote wire connections. 
+
+!!! important
+    To prevent eclipse attacks, we recommend enabling the [remote connections limit](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
+    when connecting to any public network and especially when using [fast sync](../../Reference/Pantheon-CLI-Syntax.md#fast-sync-options). 
+
 ## Limiting Peers
 
 Limiting peers reduces the bandwidth used by Pantheon. It also reduces the CPU time and disk access 
