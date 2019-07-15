@@ -45,7 +45,7 @@ Local permissioning affects your node but not the rest of the network. Use local
 of your node (that is, the resources under your control). For example, customers that can access your node. 
 
 Local permissioning doesn't require co-ordination with the rest of the network and you can act immediately to
-protect your node. Your rules are not enforced in new blocks. 
+protect your node. Your rules are not enforced in blocks produced by other nodes. 
 
 ### Onchain 
 
