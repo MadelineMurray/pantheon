@@ -3771,9 +3771,110 @@ None
 
 ### eea_createPrivacyGroup 
 
+Creates a privacy group containing the specified members. Members are specified by their Orion public key. 
+
+**Parameters** 
+
+`data` - Orion public key of creator of the privacy group 
+`string` - Privacy group name. Optional. 
+`string` - Privacy group description. Optional. 
+`array of data` - Array of members specified by Orion public key. 
+
+**Returns** 
+
+Privacy group ID 
+
+!!! example
+    ```bash tab="curl HTTP request"
+    curl -X POST --data '{"jsonrpc":"2.0","method":"eea_createPrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "Group A", "Description Group A", ["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=","g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="]],"id":1}' http://127.0.0.1:8545
+    ```
+    
+    ```bash tab="wscat WS request"
+    {"jsonrpc":"2.0","method":"eea_createPrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "Group A", "Description Group A", ["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=","g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="]],"id":1}
+    ```
+    
+    ```json tab="JSON result"
+    ADD THIS
+    ``` 
 
 ### eea_deletePrivacyGroup
 
+Deletes the specified privacy group. 
+
+**Parameters** 
+
+`data` - Orion public key of the Orion node deleting the group <CONFIRM/REWORD>  
+`data` - Privacy group ID 
+
+**Returns** 
+
+Privacy group ID 
+
+!!! example
+    ```bash tab="curl HTTP request"
+    curl -X POST --data '{"jsonrpc":"2.0","method":"eea_createPrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "Group A", "Description Group A", ["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=","g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="]],"id":1}' http://127.0.0.1:8545
+    ```
+    
+    ```bash tab="wscat WS request"
+    {"jsonrpc":"2.0","method":"eea_deletePrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "kAbelwaVW7okoEn1+okO+AbA4Hhz/7DaCOWVQz9nx5MkPQ8vO3tCu+ZuD/e5CbhqqzOp3g=="],"id":1}
+    ```
+    
+    ```json tab="JSON result"
+    ADD THIS
+    ```
+
+### eea_deletePrivacyGroup
+
+Deletes the specified privacy group. 
+
+**Parameters** 
+
+`data` - Orion public key of the Orion node deleting the group <CONFIRM/REWORD>  
+`data` - Privacy group ID 
+
+**Returns** 
+
+Privacy group ID 
+
+!!! example
+    ```bash tab="curl HTTP request"
+    curl -X POST --data '{"jsonrpc":"2.0","method":"eea_createPrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "Group A", "Description Group A", ["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=","g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="]],"id":1}' http://127.0.0.1:8545
+    ```
+    
+    ```bash tab="wscat WS request"
+    {"jsonrpc":"2.0","method":"eea_deletePrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "kAbelwaVW7okoEn1+okO+AbA4Hhz/7DaCOWVQz9nx5MkPQ8vO3tCu+ZuD/e5CbhqqzOp3g=="],"id":1}
+    ```
+    
+    ```json tab="JSON result"
+    ADD THIS
+    ```
+
+### eea_findPrivacyGroup
+
+Returns a list of privacy groups that contain exactly the listed members. For example, if the listed members are
+A and B, a privacy group containing A, B, and C is not returned. 
+
+**Parameters** 
+
+`array of data` - Members  
+
+**Returns** 
+
+Privacy groups which contain exactly the specified members. Privacy group metadata (eg, name) and IDs 
+are returned.  
+
+!!! example
+    ```bash tab="curl HTTP request"
+    curl -X POST --data '{"jsonrpc":"2.0","method":"eea_createPrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "Group A", "Description Group A", ["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=","g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="]],"id":1}' http://127.0.0.1:8545
+    ```
+    
+    ```bash tab="wscat WS request"
+    {"jsonrpc":"2.0","method":"eea_deletePrivacyGroup","params":["negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=", "kAbelwaVW7okoEn1+okO+AbA4Hhz/7DaCOWVQz9nx5MkPQ8vO3tCu+ZuD/e5CbhqqzOp3g=="],"id":1}
+    ```
+    
+    ```json tab="JSON result"
+    ADD THIS
+    ```
 
 ### eea_sendRawTransaction
 
