@@ -38,6 +38,7 @@ for information on options that were previously automatically added to the Panth
 
 ### Technical Improvements 
 
+- Update Orion version [\#1716](https://github.com/PegaSysEng/pantheon/pull/1716)
 - Rename CLI flag for better ordering of options [\#1715](https://github.com/PegaSysEng/pantheon/pull/1715)
 - Routine dependency updates [\#1712](https://github.com/PegaSysEng/pantheon/pull/1712) 
 - Fix spelling error in getApplicationPrefix method name [\#1711](https://github.com/PegaSysEng/pantheon/pull/1711) 
