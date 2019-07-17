@@ -664,9 +664,6 @@ Possible values are :
     Values are case insensitive, so either `mainnet` or `MAINNET` works.
     
 !!!important
-    To prevent eclipse attacks, we recommend enabling the [remote connections limit](#remote-connections-limit-enabled)
-    when connecting to any public network and especially when using [fast sync](#fast-sync-options).
-    
     The [`--network`](#network) and [`--genesis-file`](#genesis-file) option cannot be used at the same time.
     
 ### network-id
@@ -1031,7 +1028,7 @@ URL on which the [Orion node](../Privacy/Configuring-Privacy.md#4-create-orion-c
 ```
 
 ```bash tab="Command Line"
---remote-connections-limit-enabled
+--remote-connections-limit-enabled=false
 ```
 
 ```bash tab="Environment Variable"
@@ -1045,8 +1042,8 @@ remote-connections-limit-enabled=false
 Specify to limit the percentage of wire connections initiated by peers. Default is true. 
 
 !!! tip
-    In private networks with a level of trust between peers, disabling the [remote connection limits](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
-    may increase the speed at which nodes are able to join the network.
+    In private networks with a level of trust between peers, disabling the remote connection limits 
+    may increase the speed at which nodes can join the network.
 
 !!! important
     To prevent eclipse attacks, ensure the remote connections limit is enabled when connecting to 

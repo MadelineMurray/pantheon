@@ -87,5 +87,5 @@ If `Successfully accepted connection from ...` is displayed, connections are get
 ## Limiting Remote Connections 
 
 In private networks with a level of trust between peers, enabling the [remote connection limits](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
-is unnecessary and disabling may increase the speed at which nodes are able to join the network.
+is unnecessary and disabling may increase the speed at which nodes can join the network.
 
