@@ -304,29 +304,8 @@ PANTHEON_MAX_PEERS=42
 max-peers=42
 ```
 
-Specifies the maximum P2P peer connections that can be established.
+Specifies the maximum P2P connections that can be established.
 The default is 25.
-
-### max-remote-connections-percentage
-
-```bash tab="Syntax"
---max-remote-connections-percentage=<DOUBLE>
-```
-
-```bash tab="Command Line"
---max-remote-connections-percentage=25
-```
-
-```bash tab="Environment Variable"
-PANTHEON_MAX_REMOTE_CONNECTIONS_PERCENTAGE=25
-```
-
-```bash tab="Configuration File"
-max-remote-connections-percentage=25
-```
-
-Percentage of remote wire connections that can be established with the node. Must be between 0 and 100 inclusive.
-Default is 60. 
 
 ### metrics-category
 
@@ -1048,7 +1027,7 @@ PANTHEON_REMOTE_CONNECTIONS_LIMIT_ENABLED=false
 remote-connections-limit-enabled=false
 ```
 
-Specify to limit the percentage of wire connections initiated by peers. Default is true. 
+Specify to limit the percentage of remote P2P connections initiated by peers. Default is true. 
 
 !!! tip
     In private networks with a level of trust between peers, disabling the remote connection limits 
@@ -1057,6 +1036,27 @@ Specify to limit the percentage of wire connections initiated by peers. Default 
 !!! important
     To prevent eclipse attacks, ensure the remote connections limit is enabled when connecting to 
     any public network and especially when using [fast sync](#fast-sync-options). 
+
+### remote-connections-max-percentage
+
+```bash tab="Syntax"
+--remote-connections-max-percentage=<DOUBLE>
+```
+
+```bash tab="Command Line"
+--remote-connections-max-percentage=25
+```
+
+```bash tab="Environment Variable"
+PANTHEON_REMOTE_CONNECTIONS_MAX_PERCENTAGE=25
+```
+
+```bash tab="Configuration File"
+remote-connections-max-percentage=25
+```
+
+Percentage of remote P2P connections that can be established with the node. Must be between 0 and 100 inclusive.
+Default is 60. 
 
 ### rpc-http-api
 
