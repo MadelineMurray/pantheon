@@ -25,6 +25,7 @@ for information on options that were previously automatically added to the Panth
 - Updated eea send raw transaction with privacy group ID [\#1611](https://github.com/PegaSysEng/pantheon/pull/1611) (thanks to [iikirilov](https://github.com/iikirilov))
 - Added Revert Reason [\#1603](https://github.com/PegaSysEng/pantheon/pull/1603)
 - Documentation updates include: 
+  - Added [UPnP content](https://docs.pantheon.pegasys.tech/en/latest/Configuring-Pantheon/Networking/Using-UPnP/)
   - Added [load balancer image](https://docs.pantheon.pegasys.tech/en/latest/Deploying-Pantheon/High-Availability/) 
   - Added [revert reason](https://docs.pantheon.pegasys.tech/en/latest/Using-Pantheon/Transactions/Revert-Reason/) 
   - Added [admin\_changeLogLevel](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-API-Methods/#admin_changeloglevel) JSON RPC API (thanks to [matkt](https://github.com/matkt))
