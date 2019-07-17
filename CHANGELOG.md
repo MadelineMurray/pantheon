@@ -34,9 +34,11 @@ for information on options that were previously automatically added to the Panth
   - Added [transaction validation content](https://docs.pantheon.pegasys.tech/en/latest/Using-Pantheon/Transactions/Transaction-Validation/) 
   - Updated [permissioning overview](https://docs.pantheon.pegasys.tech/en/latest/Permissions/Permissioning-Overview/) for onchain account permissioning 
   - Updated [quickstart](https://docs.pantheon.pegasys.tech/en/latest/Tutorials/Private-Network-Quickstart/#monitoring-nodes-with-prometheus-and-grafana) to include Prometheus and Grafana 
+  - Added [remote connections limits options](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-CLI-Syntax/#remote-connections-limit-enabled)
 
 ### Technical Improvements 
 
+- Rename CLI flag for better ordering of options [\#1715](https://github.com/PegaSysEng/pantheon/pull/1715)
 - Routine dependency updates [\#1712](https://github.com/PegaSysEng/pantheon/pull/1712) 
 - Fix spelling error in getApplicationPrefix method name [\#1711](https://github.com/PegaSysEng/pantheon/pull/1711) 
 - Wait and retry if best peer's chain is too short for fast sync [\#1708](https://github.com/PegaSysEng/pantheon/pull/1708) 
