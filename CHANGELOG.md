@@ -4,6 +4,36 @@
 
 From v1.2, Pantheon will require Java 11.  That is, Pantheon on Java 8 will no longer be supported.
 
+### Docker Image Migration for v1.2
+
+In v1.2, we removed the entry-point script from our Docker image. Refer to the [migration guide](https://docs.pantheon.pegasys.tech/en/latest/Deploying-Pantheon/High-Availability/)
+for information on options that were previously automatically added to the Pantheon command line. 
+
+## 1.2-RC 
+
+### Additions and Improvements 
+
+- Add UPnP Support [\#1334](https://github.com/PegaSysEng/pantheon/pull/1334) (thanks to [notlesh](https://github.com/notlesh))
+- Limit the fraction of wire connections initiated by peers [\#1665](https://github.com/PegaSysEng/pantheon/pull/1665) 
+- EIP-1706 - Disable SSTORE with gasleft lt call stipend  [\#1706](https://github.com/PegaSysEng/pantheon/pull/1706) 
+- EIP-1108 - Reprice alt\_bn128 [\#1704](https://github.com/PegaSysEng/pantheon/pull/1704) 
+- EIP-1344 ChainID Opcode [\#1690](https://github.com/PegaSysEng/pantheon/pull/1690)
+- New release docker image [\#1664](https://github.com/PegaSysEng/pantheon/pull/1664) 
+- Support changing log level at runtime [\#1656](https://github.com/PegaSysEng/pantheon/pull/1656) (thanks to [matkt](https://github.com/matkt))
+- Implement dump command to dump a specific block from storage [\#1641](https://github.com/PegaSysEng/pantheon/pull/1641) (thanks to [matkt](https://github.com/matkt))
+- Add eea\_findPrivacyGroup endpoint to Pantheon [\#1635](https://github.com/PegaSysEng/pantheon/pull/1635) (thanks to [Puneetha17](https://github.com/Puneetha17))
+- Updated eea send raw transaction with privacy group ID [\#1611](https://github.com/PegaSysEng/pantheon/pull/1611) (thanks to [iikirilov](https://github.com/iikirilov))
+- Added Revert Reason [\#1603](https://github.com/PegaSysEng/pantheon/pull/1603)
+- Documentation updates include: 
+  - Added [load balancer image](https://docs.pantheon.pegasys.tech/en/latest/Deploying-Pantheon/High-Availability/) 
+  - Added [revert reason](https://docs.pantheon.pegasys.tech/en/latest/Using-Pantheon/Transactions/Revert-Reason/) 
+  - Added [admin\_changeLogLevel](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-API-Methods/#admin_changeloglevel) JSON RPC API (thanks to [matkt](https://github.com/matkt))
+  - Updated for [new Docker image](https://docs.pantheon.pegasys.tech/en/latest/Getting-Started/Run-Docker-Image/) 
+  - Added [Docker image migration content](https://docs.pantheon.pegasys.tech/en/latest/Deploying-Pantheon/Migration-Docker/) 
+  - Added [transaction validation content](https://docs.pantheon.pegasys.tech/en/latest/Using-Pantheon/Transactions/Transaction-Validation/) 
+  - Updated [permissioning overview](https://docs.pantheon.pegasys.tech/en/latest/Permissions/Permissioning-Overview/) for onchain account permissioning 
+  - Updated [quickstart](https://docs.pantheon.pegasys.tech/en/latest/Tutorials/Private-Network-Quickstart/#monitoring-nodes-with-prometheus-and-grafana) to include Prometheus and Grafana 
+
 ## 1.1.4 
 
 ### Additions and Improvements
