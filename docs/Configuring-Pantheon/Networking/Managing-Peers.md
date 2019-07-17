@@ -3,16 +3,6 @@ description: Managing Pantheon peers
 
 # Managing Peers 
  
-## Limiting Remote Connections 
-
-Use the [`--remote-connections-limit-enabled`](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
-and [`--remote-connections-percentage`](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-percentage) options 
-to limit the number of remote wire connections. 
-
-!!! important
-    To prevent eclipse attacks, we recommend enabling the [remote connections limit](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
-    when connecting to any public network and especially when using [fast sync](../../Reference/Pantheon-CLI-Syntax.md#fast-sync-options). 
-
 ## Limiting Peers
 
 Limiting peers reduces the bandwidth used by Pantheon. It also reduces the CPU time and disk access 
@@ -93,3 +83,9 @@ If `Successfully accepted connection from ...` is displayed, connections are get
 
 !!! example "Example log output"
     `2018-10-16 12:37:35.479-04:00 | nioEventLoopGroup-3-1 | INFO  | NettyP2PNetwork | Successfully accepted connection from 0xa979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c`
+
+## Limiting Remote Connections 
+
+In private networks with a level of trust between peers, enabling the [remote connection limits](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
+is unnecessary and disabling may increase the speed at which nodes are able to join the network.
+

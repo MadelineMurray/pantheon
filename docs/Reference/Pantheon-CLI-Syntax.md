@@ -322,6 +322,27 @@ max-peers=42
 Specifies the maximum P2P peer connections that can be established.
 The default is 25.
 
+### max-remote-connections-percentage
+
+```bash tab="Syntax"
+--max-remote-connections-percentage=<DOUBLE>
+```
+
+```bash tab="Command Line"
+--max-remote-connections-percentage=25
+```
+
+```bash tab="Environment Variable"
+PANTHEON_MAX_REMOTE_CONNECTIONS_PERCENTAGE=25
+```
+
+```bash tab="Configuration File"
+max-remote-connections-percentage=25
+```
+
+Percentage of remote wire connections that can be established with the node. Must be between 0 and 100 inclusive.
+Default is 60. 
+
 ### metrics-category
 
 ```bash tab="Syntax"
@@ -1014,39 +1035,22 @@ URL on which the [Orion node](../Privacy/Configuring-Privacy.md#4-create-orion-c
 ```
 
 ```bash tab="Environment Variable"
-PANTHEON_REMOTE_CONNECTIONS_LIMIT_ENABLED=true
+PANTHEON_REMOTE_CONNECTIONS_LIMIT_ENABLED=false
 ```
 
 ```bash tab="Configuration File"
-remote-connections-limit-enabled=true
+remote-connections-limit-enabled=false
 ```
 
-Specify to limit the percentage of wire connections initiated by peers. Default is false. 
+Specify to limit the percentage of wire connections initiated by peers. Default is true. 
+
+!!! tip
+    In private networks with a level of trust between peers, disabling the [remote connection limits](../../Reference/Pantheon-CLI-Syntax.md#remote-connections-limit-enabled)
+    may increase the speed at which nodes are able to join the network.
 
 !!! important
-    To prevent eclipse attacks, we recommend enabling the remote connections limit when connecting to 
+    To prevent eclipse attacks, ensure the remote connections limit is enabled when connecting to 
     any public network and especially when using [fast sync](#fast-sync-options). 
-
-### remote-connections-percentage
-
-```bash tab="Syntax"
---remote-connections-percentage=<DOUBLE>
-```
-
-```bash tab="Command Line"
---remote-connections-percentage=25
-```
-
-```bash tab="Environment Variable"
-PANTHEON_REMOTE_CONNECTIONS_PERCENTAGE=25
-```
-
-```bash tab="Configuration File"
-remote-connections-percentage=25
-```
-
-Percentage of remote wire connections that can be established with the node. Must be between 0 and 100 inclusive.
-Default is 50. 
 
 ### rpc-http-api
 
@@ -1477,10 +1481,6 @@ sync-mode="FAST"
 ```
 
 Specifies the synchronization mode. Default is `FULL`.
-
-!!!important
-    To prevent eclipse attacks, we recommend enabling the [remote connections limit](#remote-connections-limit-enabled) 
-    when using fast sync.
 
 ### fast-sync-min-peers
 
