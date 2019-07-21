@@ -3,7 +3,7 @@ description: Creating and sending private transactions
 
 # Creating and Sending Private Transactions 
 
-To create and send private transactions use one of: 
+To create and send private transactions using: 
 
 * [web3.js-eea client library](eeajs.md) or [web3j client library](https://github.com/web3j/web3j)
 * [`eea_sendTransaction` with EthSigner](https://docs.ethsigner.pegasys.tech/en/latest/Using-EthSigner/Using-EthSigner/) 
@@ -13,39 +13,23 @@ To create and send private transactions use one of:
     Private transactions either deploy contracts or call contract functions. 
     Ether transfer transactions cannot be private. 
     
-## Accessing Private Transactions using JSON-RPC
+## Methods for Private Transactions
 
-A private transaction creates a Privacy Marker Transaction (PMT) that is included in a block and 
-propagated using devP2P in the same way as a public Ethereum transaction. JSON-RPC API methods are 
-provided to access private transaction receipts and counts: 
+A private transaction creates a Privacy Marker Transaction (PMT) as well the private transaction itself. 
+Use [`eth_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eth_gettransactionreceipt) to 
+get the transaction receipt for the Privacy Maker Transaction and [`eea_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eea_gettransactionreceipt) 
+to get the transaction receipt for the private transaction. 
 
-* [`eea_getTransactionCount`]
-* [`eea_getTransactionReceipt`]   
-* [`eea_getPrivateTransaction`]
-* [`eth_getTransactionReceipt`]
+Use [`eth_getTransactionByHash`](../../Reference/Pantheon-API-Methods.md#eth_gettransactionbyhash) to 
+get the Privacy Marker Transaction using the transaction hash returned when submitting the private transaction. 
+Use [`eea_getPrivateTransacton`] to get the private transaction using the `input` value from Privacy Marker Transaction. 
+
+Separate private states are maintained for each [privacy group](../Privacy-Overview.md#privacy-groups) so 
+the account nonce for an account is specific to the privacy group. That is, the nonce for account A for
+privacy group ABC is different to the account nonce for account A for privacy group AB. Use 
+[`eea_getTransactionCount`](../../Reference/Pantheon-API-Methods.md#eea_gettransactioncount) to get 
+the account nonce for an account for the specified privacy group. 
 
 !!! note
-    If sending a large number of private transactions, the nonce for the account and privacy group must
-    be maintained outside the client. Unlike [`eth_getTransaction Count`], [`eea_getTransactionCount`] does 
-    not include the block parameter to specify the pending block to obtain the account nonce. 
-    
-
-## Methods for Privacy Groups 
-
-* [`eea_createPrivacyGroup`]
-* [`eea_deletePrivacyGroup`]
-* [`eea_findPrivacyGroup`]
-* [`eea_sendRawTransaction`] specifying a privacy group ID 
-* [`eea_sendTransaction`] specifying a privacy group
-
-## Example
-
-Create Privacy Group containing A & B 
-
-Send transaction using eea_sendTransaction specifying privacy group A 
-
-eth_getTransactionReceipt (one example privy and one not)
-
-eea_getPrivateTransaction (one example privy and one not)
-
-eea_getTransaction Count  
+    If sending a large number of private transactions, you may need to calculate the nonce for the account 
+    and privacy group outside the client. 
