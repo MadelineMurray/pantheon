@@ -3,7 +3,7 @@ description: Creating and sending private transactions
 
 # Creating and Sending Private Transactions 
 
-To create and send private transactions using: 
+Create and send private transactions using: 
 
 * [web3.js-eea client library](eeajs.md) or [web3j client library](https://github.com/web3j/web3j)
 * [`eea_sendTransaction` with EthSigner](https://docs.ethsigner.pegasys.tech/en/latest/Using-EthSigner/Using-EthSigner/) 
@@ -15,14 +15,15 @@ To create and send private transactions using:
     
 ## Methods for Private Transactions
 
-A private transaction creates a Privacy Marker Transaction (PMT) as well the private transaction itself. 
+A private transaction creates a [Privacy Marker Transaction](../Private-Transaction-Processing.md) as well the private transaction itself. 
 Use [`eth_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eth_gettransactionreceipt) to 
 get the transaction receipt for the Privacy Maker Transaction and [`eea_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eea_gettransactionreceipt) 
 to get the transaction receipt for the private transaction. 
 
 Use [`eth_getTransactionByHash`](../../Reference/Pantheon-API-Methods.md#eth_gettransactionbyhash) to 
-get the Privacy Marker Transaction using the transaction hash returned when submitting the private transaction. 
-Use [`eea_getPrivateTransacton`] to get the private transaction using the `input` value from Privacy Marker Transaction. 
+get the Privacy Marker Transaction with the transaction hash returned when submitting the private transaction. 
+Use [`eea_getPrivateTransacton`](../../Reference/Pantheon-API-Methods.md#eea_getprivatetransaction) 
+to get the private transaction with the `input` value from the Privacy Marker Transaction. 
 
 Separate private states are maintained for each [privacy group](../Privacy-Overview.md#privacy-groups) so 
 the account nonce for an account is specific to the privacy group. That is, the nonce for account A for
