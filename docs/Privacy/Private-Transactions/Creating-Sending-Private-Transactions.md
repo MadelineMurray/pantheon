@@ -15,7 +15,7 @@ Create and send private transactions using:
     
 ## Methods for Private Transactions
 
-A private transaction creates a [Privacy Marker Transaction](../Private-Transaction-Processing.md) as well the private transaction itself. 
+A private transaction creates a [Privacy Marker Transaction](../Private-Transaction-Processing.md) in addition to the private transaction itself. 
 Use [`eth_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eth_gettransactionreceipt) to 
 get the transaction receipt for the Privacy Maker Transaction and [`eea_getTransactionReceipt`](../../Reference/Pantheon-API-Methods.md#eea_gettransactionreceipt) 
 to get the transaction receipt for the private transaction. 
