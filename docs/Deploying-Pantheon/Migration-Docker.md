@@ -43,7 +43,7 @@ now `/opt/pantheon/key`.
 
 !!! important 
     Do not mount a volume at the default data path (`/opt/pantheon`). Mounting a volume at the default 
-    data path stops the image from running. 
+    data path path interferes with the operation of Pantheon and prevents Pantheon from safely launching. 
     
     To run a node that maintains the node state (key and database), [`--data-path` must be set to a location
     other than `/opt/pantheon` and a storage volume mounted at that location](../Getting-Started/Run-Docker-Image.md#starting-pantheon). 
