@@ -22,7 +22,7 @@ for information on options that were previously automatically added to the Panth
   - [Added `blocks export` subcommand](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-CLI/Pantheon-CLI-Subcommands/#export)
 
 ### Technical Improvements 
-
+- Use a BigInteger for Network ID [\#1891](https://github.com/PegaSysEng/pantheon/pull/1891) 
 - Update the `pantheon blocks export` command usage [\#1887](https://github.com/PegaSysEng/pantheon/pull/1887) (thanks to [matkt](https://github.com/matkt))
 - Stop Returning null for 'pending' RPC calls [\#1883](https://github.com/PegaSysEng/pantheon/pull/1883) 
 - Blake validation errors are hard errors [\#1882](https://github.com/PegaSysEng/pantheon/pull/1882) 
