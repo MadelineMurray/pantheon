@@ -31,6 +31,7 @@ import static tech.pegasys.pantheon.metrics.prometheus.MetricsConfiguration.DEFA
 import tech.pegasys.pantheon.PantheonInfo;
 import tech.pegasys.pantheon.Runner;
 import tech.pegasys.pantheon.RunnerBuilder;
+import tech.pegasys.pantheon.chainimport.RlpBlockImporter;
 import tech.pegasys.pantheon.cli.config.EthNetworkConfig;
 import tech.pegasys.pantheon.cli.config.NetworkName;
 import tech.pegasys.pantheon.cli.converter.MetricCategoryConverter;
@@ -51,6 +52,8 @@ import tech.pegasys.pantheon.cli.subcommands.PublicKeySubCommand;
 import tech.pegasys.pantheon.cli.subcommands.PublicKeySubCommand.KeyLoader;
 import tech.pegasys.pantheon.cli.subcommands.RetestethSubCommand;
 import tech.pegasys.pantheon.cli.subcommands.blocks.BlocksSubCommand;
+import tech.pegasys.pantheon.cli.subcommands.blocks.BlocksSubCommand.JsonBlockImporterFactory;
+import tech.pegasys.pantheon.cli.subcommands.blocks.BlocksSubCommand.RlpBlockExporterFactory;
 import tech.pegasys.pantheon.cli.subcommands.operator.OperatorSubCommand;
 import tech.pegasys.pantheon.cli.subcommands.rlp.RLPSubCommand;
 import tech.pegasys.pantheon.cli.util.ConfigOptionSearchAndRunHandler;
@@ -58,6 +61,7 @@ import tech.pegasys.pantheon.cli.util.VersionProvider;
 import tech.pegasys.pantheon.config.GenesisConfigFile;
 import tech.pegasys.pantheon.controller.KeyPairUtil;
 import tech.pegasys.pantheon.controller.PantheonController;
+import tech.pegasys.pantheon.controller.PantheonControllerBuilder;
 import tech.pegasys.pantheon.ethereum.core.Address;
 import tech.pegasys.pantheon.ethereum.core.MiningParameters;
 import tech.pegasys.pantheon.ethereum.core.PrivacyParameters;
@@ -77,6 +81,7 @@ import tech.pegasys.pantheon.ethereum.permissioning.LocalPermissioningConfigurat
 import tech.pegasys.pantheon.ethereum.permissioning.PermissioningConfiguration;
 import tech.pegasys.pantheon.ethereum.permissioning.PermissioningConfigurationBuilder;
 import tech.pegasys.pantheon.ethereum.permissioning.SmartContractPermissioningConfiguration;
+import tech.pegasys.pantheon.ethereum.worldstate.PruningConfiguration;
 import tech.pegasys.pantheon.metrics.MetricCategory;
 import tech.pegasys.pantheon.metrics.MetricsSystem;
 import tech.pegasys.pantheon.metrics.PantheonMetricCategory;
@@ -91,9 +96,6 @@ import tech.pegasys.pantheon.services.PantheonEventsImpl;
 import tech.pegasys.pantheon.services.PantheonPluginContextImpl;
 import tech.pegasys.pantheon.services.PicoCLIOptionsImpl;
 import tech.pegasys.pantheon.services.kvstore.RocksDbConfiguration;
-import tech.pegasys.pantheon.util.BlockExporter;
-import tech.pegasys.pantheon.util.BlockImporter;
-import tech.pegasys.pantheon.util.InvalidConfigurationException;
 import tech.pegasys.pantheon.util.PermissioningConfigurationValidator;
 import tech.pegasys.pantheon.util.bytes.BytesValue;
 import tech.pegasys.pantheon.util.number.Fraction;
@@ -155,8 +157,9 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
 
   private CommandLine commandLine;
 
-  private final BlockImporter blockImporter;
-  private final BlockExporter blockExporter;
+  private final RlpBlockImporter rlpBlockImporter;
+  private final JsonBlockImporterFactory jsonBlockImporterFactory;
+  private final RlpBlockExporterFactory rlpBlockExporterFactory;
 
   final NetworkingOptions networkingOptions = NetworkingOptions.create();
   final SynchronizerOptions synchronizerOptions = SynchronizerOptions.create();
@@ -546,6 +549,29 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
   private final BytesValue extraData = DEFAULT_EXTRA_DATA;
 
   @Option(
+      names = {"--pruning-enabled"},
+      hidden = true,
+      description =
+          "Enable pruning of world state of blocks older than the retention period (default: ${DEFAULT-VALUE})")
+  private final Boolean isPruningEnabled = false;
+
+  @Option(
+      names = {"--pruning-blocks-retained"},
+      hidden = true,
+      description =
+          "Number of recent blocks for which to keep entire world state (default: ${DEFAULT-VALUE})",
+      arity = "1")
+  private final Long pruningBlocksRetained = DEFAULT_PRUNING_BLOCKS_RETAINED;
+
+  @Option(
+      names = {"--pruning-block-confirmations"},
+      hidden = true,
+      description =
+          "Number of confirmations on a block before marking begins (default: ${DEFAULT-VALUE})",
+      arity = "1")
+  private final Long pruningBlockConfirmations = DEFAULT_PRUNING_BLOCK_CONFIRMATIONS;
+
+  @Option(
       names = {"--permissions-nodes-config-file-enabled"},
       description = "Enable node level permissions (default: ${DEFAULT-VALUE})")
   private final Boolean permissionsNodesEnabled = false;
@@ -601,6 +627,12 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
   private final Integer privacyPrecompiledAddress = Address.PRIVACY;
 
   @Option(
+      names = {"--privacy-marker-transaction-signing-key-file"},
+      description =
+          "The name of a file containing the private key used to sign privacy marker transactions. If unset, each will be signed with a random key.")
+  private final Path privacyMarkerTransactionSigningKeyPath = null;
+
+  @Option(
       names = {"--tx-pool-max-size"},
       paramLabel = MANDATORY_INTEGER_FORMAT_HELP,
       description =
@@ -631,15 +663,17 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
 
   public PantheonCommand(
       final Logger logger,
-      final BlockImporter blockImporter,
-      final BlockExporter blockExporter,
+      final RlpBlockImporter rlpBlockImporter,
+      final JsonBlockImporterFactory jsonBlockImporterFactory,
+      final RlpBlockExporterFactory rlpBlockExporterFactory,
       final RunnerBuilder runnerBuilder,
       final PantheonController.Builder controllerBuilderFactory,
       final PantheonPluginContextImpl pantheonPluginContext,
       final Map<String, String> environment) {
     this.logger = logger;
-    this.blockImporter = blockImporter;
-    this.blockExporter = blockExporter;
+    this.rlpBlockImporter = rlpBlockImporter;
+    this.rlpBlockExporterFactory = rlpBlockExporterFactory;
+    this.jsonBlockImporterFactory = jsonBlockImporterFactory;
     this.runnerBuilder = runnerBuilder;
     this.controllerBuilderFactory = controllerBuilderFactory;
     this.pantheonPluginContext = pantheonPluginContext;
@@ -685,7 +719,11 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
       final AbstractParseResultHandler<List<Object>> resultHandler, final InputStream in) {
     commandLine.addSubcommand(
         BlocksSubCommand.COMMAND_NAME,
-        new BlocksSubCommand(blockImporter, blockExporter, resultHandler.out()));
+        new BlocksSubCommand(
+            rlpBlockImporter,
+            jsonBlockImporterFactory,
+            rlpBlockExporterFactory,
+            resultHandler.out()));
     commandLine.addSubcommand(
         PublicKeySubCommand.COMMAND_NAME,
         new PublicKeySubCommand(resultHandler.out(), getKeyLoader()));
@@ -773,7 +811,9 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
   private PantheonCommand startPlugins() {
     pantheonPluginContext.addService(
         PantheonEvents.class,
-        new PantheonEventsImpl((pantheonController.getProtocolManager().getBlockBroadcaster())));
+        new PantheonEventsImpl(
+            (pantheonController.getProtocolManager().getBlockBroadcaster()),
+            pantheonController.getTransactionPool()));
     pantheonPluginContext.startPlugins();
     return this;
   }
@@ -814,6 +854,13 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
         "--sync-mode",
         !SyncMode.FAST.equals(syncMode),
         singletonList("--fast-sync-min-peers"));
+
+    checkOptionDependencies(
+        logger,
+        commandLine,
+        "--pruning-enabled",
+        !isPruningEnabled,
+        asList("--pruning-block-confirmations", "--pruning-blocks-retained"));
 
     // noinspection ConstantConditions
     if (isMiningEnabled && coinbase == null) {
@@ -874,6 +921,16 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
 
   public PantheonController<?> buildController() {
     try {
+      return getControllerBuilder().build();
+    } catch (final IOException e) {
+      throw new ExecutionException(this.commandLine, "Invalid path", e);
+    } catch (final Exception e) {
+      throw new ExecutionException(this.commandLine, e.getMessage(), e);
+    }
+  }
+
+  public PantheonControllerBuilder<?> getControllerBuilder() {
+    try {
       return controllerBuilderFactory
           .fromEthNetworkConfig(updateNetworkConfig(getNetwork()))
           .synchronizerConfiguration(buildSyncConfig())
@@ -888,10 +945,9 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
           .privacyParameters(privacyParameters())
           .clock(Clock.systemUTC())
           .isRevertReasonEnabled(isRevertReasonEnabled)
-          .build();
-    } catch (final InvalidConfigurationException e) {
-      throw new ExecutionException(this.commandLine, e.getMessage());
-    } catch (final IOException e) {
+          .isPruningEnabled(isPruningEnabled)
+          .pruningConfiguration(buildPruningConfiguration());
+    } catch (IOException e) {
       throw new ExecutionException(this.commandLine, "Invalid path", e);
     }
   }
@@ -1135,6 +1191,7 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
       privacyParametersBuilder.setPrivacyAddress(privacyPrecompiledAddress);
       privacyParametersBuilder.setMetricsSystem(metricsSystem.get());
       privacyParametersBuilder.setDataDir(dataDir());
+      privacyParametersBuilder.setPrivateKeyPath(privacyMarkerTransactionSigningKeyPath);
     }
     return privacyParametersBuilder.build();
   }
@@ -1157,6 +1214,10 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
         .txPoolMaxSize(txPoolMaxSize)
         .pendingTxRetentionPeriod(pendingTxRetentionPeriod)
         .build();
+  }
+
+  private PruningConfiguration buildPruningConfiguration() {
+    return new PruningConfiguration(pruningBlockConfirmations, pruningBlocksRetained);
   }
 
   // Blockchain synchronisation from peers.
@@ -1351,7 +1412,7 @@ public class PantheonCommand implements DefaultCommandValues, Runnable {
     }
   }
 
-  private Path dataDir() {
+  public Path dataDir() {
     if (isFullInstantiation()) {
       return standaloneCommands.dataPath.toAbsolutePath();
     } else if (isDocker) {
