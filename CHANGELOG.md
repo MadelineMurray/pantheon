@@ -12,6 +12,7 @@ for information on options that were previously automatically added to the Panth
 ## 1.2.2 
 
 ### Additions and Improvements
+- Support large numbers for the `--network-id` option [\#1891](https://github.com/PegaSysEng/pantheon/pull/1891)
 - Added eea\_getTransactionCount Json Rpc [\#1861](https://github.com/PegaSysEng/pantheon/pull/1861) 
 - PrivacyMarkerTransaction to be signed with a randomly generated key [\#1844](https://github.com/PegaSysEng/pantheon/pull/1844) 
 - Implement eth\_getproof JSON RPC API [\#1824](https://github.com/PegaSysEng/pantheon/pull/1824) (thanks to [matkt](https://github.com/matkt))
@@ -21,8 +22,7 @@ for information on options that were previously automatically added to the Panth
   - [Added Responsible Disclosure policy](https://docs.pantheon.pegasys.tech/en/latest/Reference/Responsible-Disclosure/)
   - [Added `blocks export` subcommand](https://docs.pantheon.pegasys.tech/en/latest/Reference/Pantheon-CLI/Pantheon-CLI-Subcommands/#export)
 
-### Technical Improvements 
-- Use a BigInteger for Network ID [\#1891](https://github.com/PegaSysEng/pantheon/pull/1891) 
+### Technical Improvements  
 - Update the `pantheon blocks export` command usage [\#1887](https://github.com/PegaSysEng/pantheon/pull/1887) (thanks to [matkt](https://github.com/matkt))
 - Stop Returning null for 'pending' RPC calls [\#1883](https://github.com/PegaSysEng/pantheon/pull/1883) 
 - Blake validation errors are hard errors [\#1882](https://github.com/PegaSysEng/pantheon/pull/1882) 
