@@ -12,24 +12,27 @@ for information on options that were previously automatically added to the Panth
 ## 1.2.3 
 
 ### Additions and Improvements
-- Added an override facility for genesis configs [\#1915](https://github.com/PegaSysEng/pantheon/pull/1915) ([shemnon](https://github.com/shemnon))
-- Finer grained logging configuration [\#1895](https://github.com/PegaSysEng/pantheon/pull/1895) ([matkt](https://github.com/matkt))
+- Added an override facility for genesis configs [\#1915](https://github.com/PegaSysEng/pantheon/pull/1915) 
+- Finer grained logging configuration [\#1895](https://github.com/PegaSysEng/pantheon/pull/1895) (thanks to [matkt](https://github.com/matkt))
 
 ### Technical Improvements
-- Add archiving of docker test reports [\#1921](https://github.com/PegaSysEng/pantheon/pull/1921) ([joshuafernandes](https://github.com/joshuafernandes))
-- Remove metrics from plugin registration [\#1918](https://github.com/PegaSysEng/pantheon/pull/1918) ([shemnon](https://github.com/shemnon))
-- Replace uses of Instant.now from within the IBFT module [\#1911](https://github.com/PegaSysEng/pantheon/pull/1911) ([usmansaleem](https://github.com/usmansaleem))
-- Update plugins-api build script [\#1908](https://github.com/PegaSysEng/pantheon/pull/1908) ([shemnon](https://github.com/shemnon))
-- Ignore flaky tracing tests [\#1907](https://github.com/PegaSysEng/pantheon/pull/1907) ([abdelhamidbakhta](https://github.com/abdelhamidbakhta))
-- Ensure plugin-api module gets published at the correct maven path [\#1905](https://github.com/PegaSysEng/pantheon/pull/1905) ([EdJoJob](https://github.com/EdJoJob))
-- Return the plugin-apis to this repo [\#1900](https://github.com/PegaSysEng/pantheon/pull/1900) ([EdJoJob](https://github.com/EdJoJob))
-- Stop autogenerating PantheonInfo.java [\#1899](https://github.com/PegaSysEng/pantheon/pull/1899) ([ajsutton](https://github.com/ajsutton))
-- Extracted Metrics interfaces to plugins-api. [\#1898](https://github.com/PegaSysEng/pantheon/pull/1898) ([mark-terry](https://github.com/mark-terry))
-- Fix key value storage clear so it removes all values [\#1894](https://github.com/PegaSysEng/pantheon/pull/1894) ([jframe](https://github.com/jframe))
-- Ethsigner test [\#1892](https://github.com/PegaSysEng/pantheon/pull/1892) ([iikirilov](https://github.com/iikirilov))
-- Implement trace replay block transactions trace option [\#1886](https://github.com/PegaSysEng/pantheon/pull/1886) ([abdelhamidbakhta](https://github.com/abdelhamidbakhta))
-- Use object parameter instead of list of parameters for priv\_createPrivacyGroup [\#1868](https://github.com/PegaSysEng/pantheon/pull/1868) ([iikirilov](https://github.com/iikirilov))
-- Refactor privacy acceptance tests [\#1864](https://github.com/PegaSysEng/pantheon/pull/1864) ([iikirilov](https://github.com/iikirilov))
+
+- Add archiving of docker test reports [\#1921](https://github.com/PegaSysEng/pantheon/pull/1921) 
+- Events API: Transaction dropped, sync status, and renames [\#1919](https://github.com/PegaSysEng/pantheon/pull/1919) 
+- Remove metrics from plugin registration [\#1918](https://github.com/PegaSysEng/pantheon/pull/1918)
+- Replace uses of Instant.now from within the IBFT module [\#1911](https://github.com/PegaSysEng/pantheon/pull/1911) 
+- Update plugins-api build script [\#1908](https://github.com/PegaSysEng/pantheon/pull/1908) 
+- Ignore flaky tracing tests [\#1907](https://github.com/PegaSysEng/pantheon/pull/1907) 
+- Ensure plugin-api module gets published at the correct maven path [\#1905](https://github.com/PegaSysEng/pantheon/pull/1905) 
+- Return the plugin-apis to this repo [\#1900](https://github.com/PegaSysEng/pantheon/pull/1900)
+- Stop autogenerating PantheonInfo.java [\#1899](https://github.com/PegaSysEng/pantheon/pull/1899) 
+- Extracted Metrics interfaces to plugins-api. [\#1898](https://github.com/PegaSysEng/pantheon/pull/1898) 
+- Fix key value storage clear so it removes all values [\#1894](https://github.com/PegaSysEng/pantheon/pull/1894) 
+- Ethsigner test [\#1892](https://github.com/PegaSysEng/pantheon/pull/1892) (thanks to [iikirilov](https://github.com/iikirilov))
+- Return null private transaction receipt instead of error [\#1872](https://github.com/PegaSysEng/pantheon/pull/1872) (thanks to [iikirilov](https://github.com/iikirilov))
+- Implement trace replay block transactions trace option [\#1886](https://github.com/PegaSysEng/pantheon/pull/1886) 
+- Use object parameter instead of list of parameters for priv\_createPrivacyGroup [\#1868](https://github.com/PegaSysEng/pantheon/pull/1868) (thanks to [iikirilov](https://github.com/iikirilov))
+- Refactor privacy acceptance tests [\#1864](https://github.com/PegaSysEng/pantheon/pull/1864) (thanks to [iikirilov](https://github.com/iikirilov))
 
 ## 1.2.2 
 
